@@ -1,0 +1,24 @@
+#cloud-config
+coreos:
+  units:
+    - name: mnt-jenkins.mount
+      command: start
+      content: |
+        [Unit]
+        Description=Mount jenkins to /mnt/jenkins
+        Before=docker.service
+        [Mount]
+        What=/dev/xvdf
+        Where=/mnt/jenkins
+        Type=ext4
+    - name: jenkins.service
+      command: start
+      content: |
+        [Unit]
+        Description=Start jenkins
+        After=docker.service
+        Requires=docker.service
+        [Service]
+        ExecStartPre=/usr/bin/docker rm jenkins
+        ExecStartPre=/usr/bin/chown 1000 /mnt/jenkins
+        ExecStart=/usr/bin/docker run -p 8080:8080 -p 50000:50000 --name jenkins -v /mnt/jenkins:/var/jenkins_home jenkins
