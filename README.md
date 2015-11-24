@@ -18,6 +18,13 @@ You shouldn't need to do this if you're replacing an existing instance.
   1. `sudo systemctl restart mnt-jenkins.mount`
   1. `sudo systemctl restart jenkins`
 
+## Access
+
+```
+ssh core@<ip of the jenkins master> -L 8080:localhost:8080
+```
+
+Then fire up your browser and go to http://localhost:8080
 
 ## Teardown
 
