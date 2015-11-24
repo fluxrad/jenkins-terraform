@@ -18,6 +18,17 @@ You shouldn't need to do this if you're replacing an existing instance.
   1. `sudo systemctl restart mnt-jenkins.mount`
   1. `sudo systemctl restart jenkins`
 
+
+## Teardown
+
+To delete this stack.
+
+```
+# First taint the instance, so it gets torn down before the volume attachment
+terraform taint -module=jenkins-master aws_instance.jenkins 
+terraform destroy
+```
+
 ## Todo
 
 * Format the ext4 volume automatically. At present, when you first create the
@@ -26,7 +37,3 @@ You shouldn't need to do this if you're replacing an existing instance.
 
 * ELB for jenkins. Right now you have to SSH to the master and port forward
   port 8080
-
-
-
-

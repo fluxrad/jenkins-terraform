@@ -46,6 +46,8 @@ resource "aws_instance" "jenkins" {
     tags = {
       Name = "jenkins"
     }
+
+    depends_on = [ "aws_ebs_volume.jenkins_ebs_volume" ]
 }
 
 resource "aws_volume_attachment" "jenkins_ebs" {
